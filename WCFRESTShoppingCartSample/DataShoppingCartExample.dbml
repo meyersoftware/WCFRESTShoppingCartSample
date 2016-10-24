@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="ShoppingCartExample" Class="DataShoppingCartExampleDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=localhost\sqlexpress;Initial Catalog=ShoppingCartExample;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="ShoppingCartExampleConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Customer" Member="Customers">
+    <Type Name="Customer" Id="ID1">
+      <Column Name="CustomerID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="UserID" Type="System.String" DbType="NVarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="Firstname" Type="System.String" DbType="NVarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="Middlename" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="Lastname" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="Address" Type="System.String" DbType="NVarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="Address2" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="City" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="State" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Zip" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Product" Member="Products">
+    <Type Name="Product" Id="ID2">
+      <Column Name="ProductID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="ProductDescription" Type="System.String" DbType="Text NOT NULL" CanBeNull="false" UpdateCheck="Never" />
+      <Column Name="Price" Type="System.Decimal" DbType="Money NOT NULL" CanBeNull="false" />
+      <Column Name="Stock" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Function Name="dbo.AddStock" Method="AddStock">
+    <Parameter Name="ProductID" Parameter="productID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Count" Parameter="count" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.InsertCustomer" Method="InsertCustomer">
+    <Parameter Name="UserID" Parameter="userID" Type="System.String" DbType="NVarChar(200)" />
+    <Parameter Name="Firstname" Parameter="firstname" Type="System.String" DbType="NVarChar(200)" />
+    <Parameter Name="Middlename" Parameter="middlename" Type="System.String" DbType="NVarChar(200)" />
+    <Parameter Name="Lastname" Parameter="lastname" Type="System.String" DbType="NVarChar(200)" />
+    <Parameter Name="Address" Parameter="address" Type="System.String" DbType="NVarChar(200)" />
+    <Parameter Name="Address2" Parameter="address2" Type="System.String" DbType="NVarChar(200)" />
+    <Parameter Name="City" Parameter="city" Type="System.String" DbType="NVarChar(100)" />
+    <Parameter Name="State" Parameter="state" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="Zip" Parameter="zip" Type="System.String" DbType="NVarChar(50)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.RemoveStock" Method="RemoveStock">
+    <Parameter Name="ProductID" Parameter="productID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Count" Parameter="count" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.UpdateCustomer" Method="UpdateCustomer">
+    <Parameter Name="UserID" Parameter="userID" Type="System.String" DbType="NVarChar(200)" />
+    <Parameter Name="Firstname" Parameter="firstname" Type="System.String" DbType="NVarChar(200)" />
+    <Parameter Name="Middlename" Parameter="middlename" Type="System.String" DbType="NVarChar(200)" />
+    <Parameter Name="Lastname" Parameter="lastname" Type="System.String" DbType="NVarChar(200)" />
+    <Parameter Name="Address" Parameter="address" Type="System.String" DbType="NVarChar(200)" />
+    <Parameter Name="Address2" Parameter="address2" Type="System.String" DbType="NVarChar(200)" />
+    <Parameter Name="City" Parameter="city" Type="System.String" DbType="NVarChar(100)" />
+    <Parameter Name="State" Parameter="state" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="Zip" Parameter="zip" Type="System.String" DbType="NVarChar(50)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.GetCustomer" Method="GetCustomer">
+    <Parameter Name="UserID" Parameter="userID" Type="System.String" DbType="NVarChar(200)" />
+    <ElementType IdRef="ID1" />
+  </Function>
+  <Function Name="dbo.GetProduct" Method="GetProduct">
+    <Parameter Name="ProductID" Parameter="productID" Type="System.Int32" DbType="Int" />
+    <ElementType IdRef="ID2" />
+  </Function>
+</Database>
