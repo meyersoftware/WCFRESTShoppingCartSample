@@ -7,6 +7,7 @@ using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Text;
 using System.Web.Configuration;
+using System.Web.Script.Serialization;
 using System.Xml.Linq;
 
 namespace WCFRESTShoppingCartSample
@@ -20,15 +21,15 @@ namespace WCFRESTShoppingCartSample
             FunctionResult result = new FunctionResult();
             try
             {
-                using (DataShoppingCartExampleDataContext dc = new WCFRESTShoppingCartSample.DataShoppingCartExampleDataContext())
+                using (ShoppingCartExampleEntities dc = new ShoppingCartExampleEntities())
                 {
                     dc.AddStock(scv.ProductID, scv.Count);
-                    result.Message = "true";
+                    result.Message = true.ToJSON();
                 }
             }
             catch (Exception ex)
             {
-                result.Message = ex.Message;
+                result.Message = ex.Message.ToJSON();
             }
             return result;
         }
@@ -37,30 +38,17 @@ namespace WCFRESTShoppingCartSample
         {
             try
             {
-                using (DataShoppingCartExampleDataContext dc = new WCFRESTShoppingCartSample.DataShoppingCartExampleDataContext())
+                using (ShoppingCartExampleEntities dc = new ShoppingCartExampleEntities())
                 { 
 
-                    List<Product> products = dc.GetProduct(int.Parse(productId)).ToList();
+                    var products = dc.GetProduct(int.Parse(productId)).ToList();
 
-                    var productslist = from pl in products
-                                       select new XElement("Product",
-                                       new XElement("ProductID", pl.ProductID),
-                                       new XElement("Name", pl.Name),
-                                       new XElement("ProductDescription", pl.ProductDescription),
-                                       new XElement("Price", pl.Price),
-                                       new XElement("Stock", pl.Stock)
-                                       );
-
-                    var reportXML = new XElement("Product", productslist);
-
-                    return reportXML.ToString();
+                    return products.ToJSON();
                 }
             }
             catch (Exception ex)
             {
-                XDocument doc = new XDocument();
-                doc.Add(new XElement("root", new XElement("error", ex.Message)));
-                return doc.ToString();
+                return ex.Message.ToJSON();
             }
         }
 
@@ -68,34 +56,34 @@ namespace WCFRESTShoppingCartSample
         {
             try
             {
-                using (DataShoppingCartExampleDataContext dc = new WCFRESTShoppingCartSample.DataShoppingCartExampleDataContext())
+                using (ShoppingCartExampleEntities dc = new ShoppingCartExampleEntities())
                 { 
 
-                    List<Customer> customers = dc.GetCustomer(userId).ToList();
+                    var customers = dc.GetCustomer(userId).ToList();
 
-                    var customerinfo = from ci in customers
-                                       select new XElement("Customer",
-                                       new XElement("FirstName", ci.Firstname),
-                                       new XElement("Middlename", ci.Middlename),
-                                       new XElement("Lastname", ci.Lastname),
-                                       new XElement("Address", ci.Address),
-                                       new XElement("Address2", ci.Address2),
-                                       new XElement("City", ci.City),
-                                       new XElement("State", ci.State),
-                                       new XElement("Zip", ci.Zip)
-                                       );
-
-                    var reportXML = new XElement("Customer", customerinfo);
-
-                    return reportXML.ToString();
+                    return customers.ToJSON();
                 }
             }
             catch (Exception ex)
             {
-                XDocument doc = new XDocument();
-                doc.Add(new XElement("root", new XElement("error", ex.Message)));
-                return doc.ToString();
+                return ex.Message.ToJSON();
             }
+        }
+    }
+
+    public static class JSONHelper
+    {
+        public static string ToJSON(this object obj)
+        {
+            JavaScriptSerializer serializer = new JavaScriptSerializer();
+            return serializer.Serialize(obj);
+        }
+
+        public static string ToJSON(this object obj, int recursionDepth)
+        {
+            JavaScriptSerializer serializer = new JavaScriptSerializer();
+            serializer.RecursionLimit = recursionDepth;
+            return serializer.Serialize(obj);
         }
     }
 }

@@ -12,27 +12,27 @@ namespace WCFRESTShoppingCartSample
 {
     // NOTE: You can use the "Rename" command on the "Refactor" menu to change the interface name "IShoppingCartSampleService" in both code and config file together.
     [ServiceContract]
-    [XmlSerializerFormat]
+    [DataContractFormatAttribute]
     public interface IShoppingCartExampleService
     {
         [OperationContract]
         [WebInvoke(Method = "GET",
-            ResponseFormat = WebMessageFormat.Xml,
+            ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.Bare,
             UriTemplate = "GetProduct/{id}")]
         string GetProduct(string id);
 
         [OperationContract]
         [WebInvoke(Method = "GET",
-            ResponseFormat = WebMessageFormat.Xml,
+            ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.Bare,
             UriTemplate = "GetCustomer/{id}")]
         string GetCustomer(string id);
 
         [OperationContract]
         [WebInvoke(Method = "POST",
-            ResponseFormat = WebMessageFormat.Xml,
-            RequestFormat = WebMessageFormat.Xml,
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.Bare,
             UriTemplate = "AddStock")]
         [ServiceKnownType(typeof(StockChangeValue))]
