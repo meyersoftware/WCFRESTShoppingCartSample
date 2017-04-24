@@ -1,10 +1,13 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
+using System.ServiceModel.Channels;
+using System.ServiceModel.Web;
 using System.Text;
 using System.Web.Configuration;
 using System.Web.Script.Serialization;
@@ -16,74 +19,68 @@ namespace WCFRESTShoppingCartSample
     // NOTE: In order to launch WCF Test Client for testing this service, please select ShoppingCartSampleService.svc or ShoppingCartSampleService.svc.cs at the Solution Explorer and start debugging.
     public class ShoppingCartSampleService : IShoppingCartExampleService
     {
-        public FunctionResult AddStock (StockChangeValue scv)
+        public FunctionResult AddStock(StockChangeValue scv)
         {
             FunctionResult result = new FunctionResult();
             try
             {
-                using (ShoppingCartExampleEntities dc = new ShoppingCartExampleEntities())
+                ShoppingCartExampleEntities2 dc = new ShoppingCartExampleEntities2();
                 {
                     dc.AddStock(scv.ProductID, scv.Count);
-                    result.Message = true.ToJSON();
+                    result.Message = true.CreateJsonResponse().ToString();
                 }
             }
             catch (Exception ex)
             {
-                result.Message = ex.Message.ToJSON();
+                result.Message = ex.Message.CreateJsonResponse().ToString();
             }
             return result;
         }
 
-        public string GetProduct(string productId)
+        public Message GetProduct(string productId)
         {
             try
             {
-                using (ShoppingCartExampleEntities dc = new ShoppingCartExampleEntities())
-                { 
+                ShoppingCartExampleEntities2 dc = new ShoppingCartExampleEntities2();
+                {
 
                     var products = dc.GetProduct(int.Parse(productId)).ToList();
 
-                    return products.ToJSON();
+                    return products.CreateJsonResponse();
                 }
             }
             catch (Exception ex)
             {
-                return ex.Message.ToJSON();
+                return ex.Message.CreateJsonResponse();
             }
         }
 
-        public string GetCustomer(string userId)
+        public Message GetCustomer(string userId)
         {
             try
             {
-                using (ShoppingCartExampleEntities dc = new ShoppingCartExampleEntities())
-                { 
+                ShoppingCartExampleEntities2 dc = new ShoppingCartExampleEntities2();
+                {
 
                     var customers = dc.GetCustomer(userId).ToList();
 
-                    return customers.ToJSON();
+                    return customers.CreateJsonResponse();
                 }
             }
             catch (Exception ex)
             {
-                return ex.Message.ToJSON();
+                return ex.Message.CreateJsonResponse();
             }
         }
     }
 
-    public static class JSONHelper
+    public static class JSONFun
     {
-        public static string ToJSON(this object obj)
+        public static Message CreateJsonResponse(this object obj)
         {
-            JavaScriptSerializer serializer = new JavaScriptSerializer();
-            return serializer.Serialize(obj);
-        }
+        string msg = JsonConvert.SerializeObject(obj);
 
-        public static string ToJSON(this object obj, int recursionDepth)
-        {
-            JavaScriptSerializer serializer = new JavaScriptSerializer();
-            serializer.RecursionLimit = recursionDepth;
-            return serializer.Serialize(obj);
+        return WebOperationContext.Current.CreateTextResponse(msg, "application/json; charset=utf-8", Encoding.UTF8);
         }
     }
 }

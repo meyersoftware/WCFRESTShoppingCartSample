@@ -16,10 +16,10 @@ namespace WCFRESTShoppingCartSample
     using System.Data.Objects.DataClasses;
     using System.Linq;
     
-    public partial class ShoppingCartExampleEntities : DbContext
+    public partial class ShoppingCartExampleEntities2 : DbContext
     {
-        public ShoppingCartExampleEntities()
-            : base("name=ShoppingCartExampleEntities1")
+        public ShoppingCartExampleEntities2()
+            : base("name=ShoppingCartExampleEntities2")
         {
         }
     
@@ -28,7 +28,6 @@ namespace WCFRESTShoppingCartSample
             throw new UnintentionalCodeFirstException();
         }
     
-        public DbSet<AspNetUser> AspNetUsers { get; set; }
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Product> Products { get; set; }
     

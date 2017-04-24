@@ -6,6 +6,7 @@ using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.ServiceModel.Web;
 using System.Text;
+using System.ServiceModel.Channels;
 using System.Xml.Linq;
 
 namespace WCFRESTShoppingCartSample
@@ -20,14 +21,14 @@ namespace WCFRESTShoppingCartSample
             ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.Bare,
             UriTemplate = "GetProduct/{id}")]
-        string GetProduct(string id);
+        Message GetProduct(string id);
 
         [OperationContract]
         [WebInvoke(Method = "GET",
             ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.Bare,
             UriTemplate = "GetCustomer/{id}")]
-        string GetCustomer(string id);
+        Message GetCustomer(string id);
 
         [OperationContract]
         [WebInvoke(Method = "POST",
