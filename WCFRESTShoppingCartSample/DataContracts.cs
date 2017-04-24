@@ -14,13 +14,27 @@ namespace WCFRESTShoppingCartSample
         public string Message;
     }
 
-    [DataContract(Namespace = "")]
+    [MessageContract]
     public class StockChangeValue
     {
-        [DataMember]
+        [MessageBodyMember]
         public int ProductID { get; set; }
 
-        [DataMember]
+        [MessageBodyMember]
         public int Count { get; set; }
+    }
+
+    [MessageContract]
+    public class ProductInput
+    {
+        [MessageBodyMember]
+        public string ProductID { get; set; }
+    }
+
+    [MessageContract]
+    public class CustomerInput
+    {
+        [MessageBodyMember]
+        public string UserID { get; set; }
     }
 }

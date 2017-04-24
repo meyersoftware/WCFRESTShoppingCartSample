@@ -37,14 +37,14 @@ namespace WCFRESTShoppingCartSample
             return result;
         }
 
-        public Message GetProduct(string productId)
+        public Message GetProduct(ProductInput productId)
         {
             try
             {
                 ShoppingCartExampleEntities2 dc = new ShoppingCartExampleEntities2();
                 {
 
-                    var products = dc.GetProduct(int.Parse(productId)).ToList();
+                    var products = dc.GetProduct(int.Parse(productId.ProductID)).ToList();
 
                     return products.CreateJsonResponse();
                 }
@@ -55,14 +55,14 @@ namespace WCFRESTShoppingCartSample
             }
         }
 
-        public Message GetCustomer(string userId)
+        public Message GetCustomer(CustomerInput userId)
         {
             try
             {
                 ShoppingCartExampleEntities2 dc = new ShoppingCartExampleEntities2();
                 {
 
-                    var customers = dc.GetCustomer(userId).ToList();
+                    var customers = dc.GetCustomer(userId.UserID).ToList();
 
                     return customers.CreateJsonResponse();
                 }
