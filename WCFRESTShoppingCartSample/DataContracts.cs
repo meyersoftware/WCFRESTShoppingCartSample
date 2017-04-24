@@ -2,14 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.ServiceModel;
 using System.Web;
 
 namespace WCFRESTShoppingCartSample
 {
-    [DataContract]
+    [MessageContract]
     public class FunctionResult
     {
-        [DataMember]
+        [MessageBodyMember]
         public string Message;
     }
 
