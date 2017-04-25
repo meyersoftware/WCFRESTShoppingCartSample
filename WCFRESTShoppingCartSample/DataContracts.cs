@@ -28,7 +28,7 @@ namespace WCFRESTShoppingCartSample
     public class ProductInput
     {
         [MessageBodyMember]
-        public string ProductID { get; set; }
+        public string id { get; set; }
     }
 
     [MessageContract]

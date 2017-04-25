@@ -11,6 +11,7 @@ using System.ServiceModel.Web;
 using System.Text;
 using System.Web.Configuration;
 using System.Web.Script.Serialization;
+using System.Xml;
 using System.Xml.Linq;
 
 namespace WCFRESTShoppingCartSample
@@ -37,14 +38,14 @@ namespace WCFRESTShoppingCartSample
             return result;
         }
 
-        public Message GetProduct(ProductInput productId)
+        public Message GetProduct(Message productId)
         {
             try
             {
                 ShoppingCartExampleEntities2 dc = new ShoppingCartExampleEntities2();
                 {
 
-                    var products = dc.GetProduct(int.Parse(productId.ProductID)).ToList();
+                    var products = dc.GetProduct(int.Parse(productId.ToString())).ToList();
 
                     return products.CreateJsonResponse();
                 }
@@ -55,14 +56,14 @@ namespace WCFRESTShoppingCartSample
             }
         }
 
-        public Message GetCustomer(CustomerInput userId)
+        public Message GetCustomer(Message userId)
         {
             try
             {
                 ShoppingCartExampleEntities2 dc = new ShoppingCartExampleEntities2();
                 {
 
-                    var customers = dc.GetCustomer(userId.UserID).ToList();
+                    var customers = dc.GetCustomer(userId.ToString()).ToList();
 
                     return customers.CreateJsonResponse();
                 }

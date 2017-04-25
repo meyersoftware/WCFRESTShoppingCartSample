@@ -20,15 +20,15 @@ namespace WCFRESTShoppingCartSample
         [WebInvoke(Method = "GET",
             ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.Bare,
-            UriTemplate = "GetProduct/{id}")]
-        Message GetProduct(ProductInput id);
+            UriTemplate = "GetProduct")]
+        Message GetProduct(Message ID);
 
         [OperationContract]
         [WebInvoke(Method = "GET",
             ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.Bare,
-            UriTemplate = "GetCustomer/{id}")]
-        Message GetCustomer(CustomerInput id);
+            UriTemplate = "GetCustomer")]
+        Message GetCustomer(Message id);
 
         [OperationContract]
         [WebInvoke(Method = "POST",
