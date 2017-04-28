@@ -25,13 +25,18 @@ namespace SCWCFRest.Controllers
                 test.Data = products;
                 return products;
             }
-
         }
 
         // GET: api/Service/5
-        public string Get(int id)
+        public List<GetProduct_Result> Get(int id)
         {
-            return "value";
+            using (SCWCFRest.db6d71ab021b7344fe97f9a75f0150b4eaEntities DB = new db6d71ab021b7344fe97f9a75f0150b4eaEntities())
+            {
+                var products = DB.GetProduct(id).ToList();
+                JsonResult test = new JsonResult();
+                test.Data = products;
+                return products;
+            }
         }
 
         // POST: api/Service
