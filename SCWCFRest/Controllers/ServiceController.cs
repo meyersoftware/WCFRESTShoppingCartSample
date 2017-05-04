@@ -41,14 +41,14 @@ namespace SCWCFRest.Controllers
 
         // POST: api/Service
         [System.Web.Mvc.HttpGet]
-        public bool GetCustomer(JsonResult jr)
+        public bool GetCustomer(string customer)
         {
             using (SCWCFRest.db6d71ab021b7344fe97f9a75f0150b4eaEntities DB = new db6d71ab021b7344fe97f9a75f0150b4eaEntities())
             {
-                Customer customer = (Customer)jr.Data;
+                Customer c = (Customer)JsonConvert.DeserializeObject(customer);
 
-                DB.InsertCustomer("0", customer.Firstname, customer.Middlename, customer.Lastname,
-                    customer.Address, customer.Address2, customer.City, customer.State, customer.Zip);
+                DB.InsertCustomer("0", c.Firstname, c.Middlename, c.Lastname,
+                    c.Address, c.Address2, c.City, c.State, c.Zip);
             }
             return true;
         }
