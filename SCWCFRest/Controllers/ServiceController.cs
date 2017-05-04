@@ -40,10 +40,12 @@ namespace SCWCFRest.Controllers
         }
 
         // POST: api/Service
-        public bool Get(Customer customer)
+        public bool Get(JsonResult jr)
         {
             using (SCWCFRest.db6d71ab021b7344fe97f9a75f0150b4eaEntities DB = new db6d71ab021b7344fe97f9a75f0150b4eaEntities())
             {
+                Customer customer = (Customer)jr.Data;
+
                 DB.InsertCustomer("0", customer.Firstname, customer.Middlename, customer.Lastname,
                     customer.Address, customer.Address2, customer.City, customer.State, customer.Zip);
             }
