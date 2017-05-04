@@ -40,7 +40,7 @@ namespace SCWCFRest.Controllers
         }
 
         // POST: api/Service
-        public bool PostCustomer([FromBody]Customer customer)
+        public bool Get(Customer customer)
         {
             using (SCWCFRest.db6d71ab021b7344fe97f9a75f0150b4eaEntities DB = new db6d71ab021b7344fe97f9a75f0150b4eaEntities())
             {
