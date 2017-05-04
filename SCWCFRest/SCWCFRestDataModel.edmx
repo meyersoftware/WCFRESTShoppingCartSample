@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="db6d71ab021b7344fe97f9a75f0150b4eaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="db6d71ab021b7344fe97f9a75f0150b4eaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Customer">
           <Key>
             <PropertyRef Name="CustomerID" />
@@ -32,6 +32,11 @@
           <Property Name="SortOrder" Type="int" />
           <Property Name="Image" Type="nvarchar" MaxLength="255" />
         </EntityType>
+        <Function Name="AddOrder" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CustomerID" Type="int" Mode="In" />
+          <Parameter Name="ProductID" Type="int" Mode="In" />
+          <Parameter Name="Count" Type="int" Mode="In" />
+        </Function>
         <Function Name="AddStock" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ProductID" Type="int" Mode="In" />
           <Parameter Name="Count" Type="int" Mode="In" />
@@ -72,8 +77,7 @@
           <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="db6d71ab021b7344fe97f9a75f0150b4eaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -112,10 +116,10 @@
             <Parameter Name="Count" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetCustomer" ReturnType="Collection(db6d71ab021b7344fe97f9a75f0150b4eaModel.GetCustomer_Result)">
-            <Parameter Name="UserID" Mode="In" Type="String" />
+          <Parameter Name="UserID" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetProduct" ReturnType="Collection(db6d71ab021b7344fe97f9a75f0150b4eaModel.GetProduct_Result)">
-            <Parameter Name="ProductID" Mode="In" Type="Int32" />
+          <Parameter Name="ProductID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="InsertCustomer">
             <Parameter Name="UserID" Mode="In" Type="String" />
@@ -142,6 +146,11 @@
             <Parameter Name="City" Mode="In" Type="String" />
             <Parameter Name="State" Mode="In" Type="String" />
             <Parameter Name="Zip" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="AddOrder">
+            <Parameter Name="CustomerID" Mode="In" Type="Int32" />
+            <Parameter Name="ProductID" Mode="In" Type="Int32" />
+            <Parameter Name="Count" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="GetCustomer_Result">
@@ -233,6 +242,7 @@
           <FunctionImportMapping FunctionImportName="InsertCustomer" FunctionName="db6d71ab021b7344fe97f9a75f0150b4eaModel.Store.InsertCustomer" />
           <FunctionImportMapping FunctionImportName="RemoveStock" FunctionName="db6d71ab021b7344fe97f9a75f0150b4eaModel.Store.RemoveStock" />
           <FunctionImportMapping FunctionImportName="UpdateCustomer" FunctionName="db6d71ab021b7344fe97f9a75f0150b4eaModel.Store.UpdateCustomer" />
+          <FunctionImportMapping FunctionImportName="AddOrder" FunctionName="db6d71ab021b7344fe97f9a75f0150b4eaModel.Store.AddOrder" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

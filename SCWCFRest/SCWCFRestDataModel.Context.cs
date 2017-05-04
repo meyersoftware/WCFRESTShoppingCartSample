@@ -155,5 +155,22 @@ namespace SCWCFRest
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UpdateCustomer", userIDParameter, firstnameParameter, middlenameParameter, lastnameParameter, addressParameter, address2Parameter, cityParameter, stateParameter, zipParameter);
         }
+    
+        public virtual int AddOrder(Nullable<int> customerID, Nullable<int> productID, Nullable<int> count)
+        {
+            var customerIDParameter = customerID.HasValue ?
+                new ObjectParameter("CustomerID", customerID) :
+                new ObjectParameter("CustomerID", typeof(int));
+    
+            var productIDParameter = productID.HasValue ?
+                new ObjectParameter("ProductID", productID) :
+                new ObjectParameter("ProductID", typeof(int));
+    
+            var countParameter = count.HasValue ?
+                new ObjectParameter("Count", count) :
+                new ObjectParameter("Count", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AddOrder", customerIDParameter, productIDParameter, countParameter);
+        }
     }
 }

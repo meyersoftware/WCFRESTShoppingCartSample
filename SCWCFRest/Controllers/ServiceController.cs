@@ -40,8 +40,14 @@ namespace SCWCFRest.Controllers
         }
 
         // POST: api/Service
-        public void Post([FromBody]string value)
+        public bool PostCustomer([FromBody]Customer customer)
         {
+            using (SCWCFRest.db6d71ab021b7344fe97f9a75f0150b4eaEntities DB = new db6d71ab021b7344fe97f9a75f0150b4eaEntities())
+            {
+                DB.InsertCustomer("0", customer.Firstname, customer.Middlename, customer.Lastname,
+                    customer.Address, customer.Address2, customer.City, customer.State, customer.Zip);
+            }
+            return true;
         }
 
         // PUT: api/Service/5
