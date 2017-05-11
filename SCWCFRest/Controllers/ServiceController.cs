@@ -41,17 +41,20 @@ namespace SCWCFRest.Controllers
 
         // POST: api/Service
         [System.Web.Mvc.HttpGet]
-        public bool GetCustomer(string customer)
+        public int GetCustomer(string customer)
         {
+            int customerID = 0;
             using (SCWCFRest.db6d71ab021b7344fe97f9a75f0150b4eaEntities DB = new db6d71ab021b7344fe97f9a75f0150b4eaEntities())
             {
                 Customer c = JsonConvert.DeserializeObject<Customer>(customer);
 
-                DB.InsertCustomer("0", c.Firstname, c.Middlename, c.Lastname,
+                customerID = DB.InsertCustomer("0", c.Firstname, c.Middlename, c.Lastname,
                     c.Address, c.Address2, c.City, c.State, c.Zip);
             }
-            return true;
+            return customerID;
         }
+
+        
 
         // PUT: api/Service/5
         public void Put(int id, [FromBody]string value)
