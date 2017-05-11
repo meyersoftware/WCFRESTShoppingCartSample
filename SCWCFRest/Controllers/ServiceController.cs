@@ -45,7 +45,7 @@ namespace SCWCFRest.Controllers
         {
             using (SCWCFRest.db6d71ab021b7344fe97f9a75f0150b4eaEntities DB = new db6d71ab021b7344fe97f9a75f0150b4eaEntities())
             {
-                Customer c = (Customer)JsonConvert.DeserializeObject(customer);
+                Customer c = JsonConvert.DeserializeObject<Customer>(customer);
 
                 DB.InsertCustomer("0", c.Firstname, c.Middlename, c.Lastname,
                     c.Address, c.Address2, c.City, c.State, c.Zip);
