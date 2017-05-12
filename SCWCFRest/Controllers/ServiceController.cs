@@ -38,23 +38,32 @@ namespace SCWCFRest.Controllers
                 return products;
             }
         }
-
-        // POST: api/Service
-        [System.Web.Mvc.HttpGet]
-        public int GetCustomer(string customer)
+        
+        [System.Web.Http.HttpGet]
+        public int InsertCustomer(string customer)
         {
             int customerID = 0;
+            
             using (SCWCFRest.db6d71ab021b7344fe97f9a75f0150b4eaEntities DB = new db6d71ab021b7344fe97f9a75f0150b4eaEntities())
             {
                 Customer c = JsonConvert.DeserializeObject<Customer>(customer);
-
-                customerID = DB.InsertCustomer("0", c.Firstname, c.Middlename, c.Lastname,
+                DB.InsertCustomer(c.CustomerID.ToString(), c.Firstname, c.Middlename, c.Lastname,
                     c.Address, c.Address2, c.City, c.State, c.Zip);
+                customerID = DB.Customers.Max(cust => cust.CustomerID);
             }
             return customerID;
         }
 
-        
+        [System.Web.Http.HttpGet]
+        public int InsertOrders(int customerID, int productID, int count)
+        {
+            using (SCWCFRest.db6d71ab021b7344fe97f9a75f0150b4eaEntities DB = new db6d71ab021b7344fe97f9a75f0150b4eaEntities())
+            {
+                DB.AddOrder(customerID, productID, count);
+            }
+            return 1;
+        }
+
 
         // PUT: api/Service/5
         public void Put(int id, [FromBody]string value)

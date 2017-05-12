@@ -20,6 +20,15 @@
           <Property Name="State" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Zip" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
+        <EntityType Name="Orders">
+          <Key>
+            <PropertyRef Name="OrderID" />
+          </Key>
+          <Property Name="OrderID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CustomerID" Type="int" Nullable="false" />
+          <Property Name="ProductID" Type="int" Nullable="false" />
+          <Property Name="Count" Type="int" />
+        </EntityType>
         <EntityType Name="Product">
           <Key>
             <PropertyRef Name="ProductID" />
@@ -75,6 +84,7 @@
         </Function>
         <EntityContainer Name="db6d71ab021b7344fe97f9a75f0150b4eaModelStoreContainer">
           <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -152,6 +162,7 @@
             <Parameter Name="ProductID" Mode="In" Type="Int32" />
             <Parameter Name="Count" Mode="In" Type="Int32" />
           </FunctionImport>
+          <EntitySet Name="Orders" EntityType="db6d71ab021b7344fe97f9a75f0150b4eaModel.Order" />
         </EntityContainer>
         <ComplexType Name="GetCustomer_Result">
           <Property Type="Int32" Name="CustomerID" Nullable="false" />
@@ -174,6 +185,15 @@
           <Property Type="Int32" Name="SortOrder" Nullable="true" />
           <Property Type="String" Name="Image" Nullable="true" MaxLength="255" />
         </ComplexType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="OrderID" />
+          </Key>
+          <Property Name="OrderID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CustomerID" Type="Int32" Nullable="false" />
+          <Property Name="ProductID" Type="Int32" Nullable="false" />
+          <Property Name="Count" Type="Int32" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -243,6 +263,16 @@
           <FunctionImportMapping FunctionImportName="RemoveStock" FunctionName="db6d71ab021b7344fe97f9a75f0150b4eaModel.Store.RemoveStock" />
           <FunctionImportMapping FunctionImportName="UpdateCustomer" FunctionName="db6d71ab021b7344fe97f9a75f0150b4eaModel.Store.UpdateCustomer" />
           <FunctionImportMapping FunctionImportName="AddOrder" FunctionName="db6d71ab021b7344fe97f9a75f0150b4eaModel.Store.AddOrder" />
+          <EntitySetMapping Name="Orders">
+            <EntityTypeMapping TypeName="db6d71ab021b7344fe97f9a75f0150b4eaModel.Order">
+              <MappingFragment StoreEntitySet="Orders">
+                <ScalarProperty Name="Count" ColumnName="Count" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -173,6 +173,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Order.cs">
+      <DependentUpon>SCWCFRestDataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Product.cs">
       <DependentUpon>SCWCFRestDataModel.tt</DependentUpon>
     </Compile>

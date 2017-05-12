@@ -29,6 +29,7 @@ namespace SCWCFRest
     
         public virtual DbSet<Customer> Customers { get; set; }
         public virtual DbSet<Product> Products { get; set; }
+        public virtual DbSet<Order> Orders { get; set; }
     
         public virtual int AddStock(Nullable<int> productID, Nullable<int> count)
         {
